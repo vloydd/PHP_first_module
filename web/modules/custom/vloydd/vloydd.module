@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function vloydd_theme($existing, $type, $theme, $path) {
+  return [
+    "vloydd-theme"=>[
+      "variables"=>[
+        'form' => NULL,
+      ]
+    ]
+  ];
+}

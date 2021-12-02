@@ -1,0 +1,7 @@
+vloydd.cats-page:
+  path: '/vloydd/cats'
+  defaults:
+    _controller: '\Drupal\vloydd\Controller\CatsPage::content'
+    _title: 'Cats Page'
+  requirements:
+    _permission: 'access content'

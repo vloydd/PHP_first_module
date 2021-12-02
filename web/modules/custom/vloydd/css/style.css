@@ -1,7 +1,6 @@
-/**
- * If using a CSS pre-processor, tell it to overwrite this file. If not, place
- * your custom CSS modifications here.
- */
+.page-header {
+  text-align: center;
+}
 .dialog-off-canvas-main-canvas {
   min-height: 100vh;
   display: flex;
@@ -32,4 +31,11 @@ html, body {
   .navbar {
     width: 100%;
   }
+}
+.vloydd-cats-form button {
+  background: #373645;
+  padding: 7px 15px;
+}
+.vloydd-cats-form [data-drupal-selector="edit-catsname"] {
+  padding: 5px 20px;
 }

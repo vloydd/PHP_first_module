@@ -23,7 +23,7 @@ html, body {
 .row {
   margin: 0;
 }
-.navbar-brand {
+.dialog-off-canvas-main-canvas .navbar-header .navbar-brand, footer .navbar-brand {
   background: #373645;
   color: #c7c7c7;
   border: 1px solid #c7c7c7;

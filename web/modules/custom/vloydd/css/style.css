@@ -22,7 +22,7 @@ html, body {
 .row {
   margin: 0;
 }
-.navbar-brand {
+.dialog-off-canvas-main-canvas.header.navbar-header.navbar-brand {
   background: #373645;
   color: #c7c7c7;
   border: 1px solid #c7c7c7;
@@ -34,8 +34,14 @@ html, body {
 }
 .vloydd-cats-form button {
   background: #373645;
-  padding: 7px 15px;
+  border-color: #4cae4c;
+  padding: 7px 15px 3px;
+}
+.vloydd-cats-form button:hover {
+  border-color: #373645;
+  background: #4cae4c;
 }
 .vloydd-cats-form [data-drupal-selector="edit-catsname"] {
   padding: 5px 20px;
+  max-width: 768px;
 }

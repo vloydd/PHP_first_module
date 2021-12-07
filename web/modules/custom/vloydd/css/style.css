@@ -7,7 +7,8 @@
   flex-direction: column;
   height: 100%;
 }
-html, body {
+html,
+body {
   background: #c7c7c7;
   min-height: 100vh;
 }
@@ -32,6 +33,10 @@ html, body {
     width: 100%;
   }
 }
+.vloydd-cats-form input {
+  padding: 5px 20px;
+  max-width: 768px;
+}
 .vloydd-cats-form button {
   background: #373645;
   border-color: #4cae4c;
@@ -41,7 +46,12 @@ html, body {
   border-color: #373645;
   background: #4cae4c;
 }
-.vloydd-cats-form [data-drupal-selector="edit-catsname"] {
-  padding: 5px 20px;
-  max-width: 768px;
+@media (min-width: 992px) {
+  input [data-drupal-selector="edit-catsemail"] {
+    width: 768px;
+  }
+}
+.false_email {
+  color: red;
+  font-size: 12px;
 }

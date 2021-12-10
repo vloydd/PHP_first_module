@@ -25,7 +25,7 @@ class CatsForms extends FormBase
     /**
      * {@inheritDoc}
      */
-    public function buildForm(array $form, FormStateInterface $form_state)
+    public function buildForm(array $form, FormStateInterface $form_state): array
     {
         $form['message'] = [
         '#type' => 'markup',
@@ -34,13 +34,13 @@ class CatsForms extends FormBase
             Hello! You can add here a photo of your cat.
          </div>',
         ];
-//      $form['message_eror'] = [
-//        '#type' => 'markup',
-//        '#markup' =>
-//          '<div class="form_fails">
-//            Hello! You can add here a photo of your cat.
-//         </div>',
-//      ];
+        //      $form['message_eror'] = [
+        //        '#type' => 'markup',
+        //        '#markup' =>
+        //          '<div class="form_fails">
+        //            Hello! You can add here a photo of your cat.
+        //         </div>',
+        //      ];
         $form['catsname'] = [
         '#type' => 'textfield',
         '#title' => $this->t("Your Cat's Name:"),
@@ -66,6 +66,28 @@ class CatsForms extends FormBase
           ],
         '#suffix' => '<p class="false_email"></p>',
         ];
+        $form['catsPhoto'] = [
+        '#type' => 'managed_file',
+        '#name' => 'catPhoto',
+        '#title' => $this->t("Your Cat's Photo:"),
+        '#description' =>
+          $this->t('Avaiable Formats: jpeg, jpg, png; MaxSize - 2MB'),
+        '#placeholder' => $this->t("Enter Your Cat's Name"),
+        '#required' => true,
+        '#upload_validators' => array(
+          'file_validate_extensions' => $this->getAllowedFileExtensions(),
+          'file_validate_size' => $this->getAllowedFileSize(),
+        ),
+        '#upload_location' => 'public://vloyd_cats_photos',
+        'size' => '2',
+        '#ajax' => [
+          'callback' => '::validateFormAjaxFile',
+          'event' => 'change',
+          'progress' => [
+            'type' => 'none',
+          ],
+        ],
+        ];
 
         $form['actions']['submit'] = [
         '#type' => 'submit',
@@ -86,99 +108,119 @@ class CatsForms extends FormBase
     /**
      * {@inheritDoc}
      */
-    public function validateForm(array &$form, FormStateInterface $form_state)
+    public function validateForm(array &$form, FormStateInterface $form_state): void
     {
-      $title = $form_state->getValue('catsname');
-      $email = $form_state->getValue('catsemail');
-      $requiers = '/[-_@A-Za-z.]/';
-      if (!(ctype_alnum($title)) && ((strlen($title) < 2) || (strlen($title) > 32))) {
-        if (strlen($title) < 2) {
-          $form_state->setErrorByName(
-            'catsname',
-            $this->t('Oh No! The Name of Your Cat is Shorter Than 2 Symbols(')
-          );
-        } elseif (strlen($title) > 32) {
-          $form_state->setErrorByName(
-            'catsname',
-            $this->t('Oh No! The Name of Your Cat is Longer Than 32 Symbols(')
-          );
-        }
-      } elseif (!ctype_alnum($title)) {
-        $form_state->setErrorByName(
-          'catsname',
-          $this->t('Oh No! Please Use Alphanumeric chatacters')
-        );
-      }
-      if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        for ($i = 0; $i < (strlen($email)); $i++) {
-          if (!preg_match($requiers, $email[$i])) {
+        $title = $form_state->getValue('catsname');
+        $email = $form_state->getValue('catsemail');
+        $requiers = '/[-_@A-Za-z.]/';
+        if (!(ctype_alnum($title)) && ((strlen($title)<2) || (strlen($title)>32))) {
+            if (strlen($title) < 2) {
+                $form_state->setErrorByName(
+                    'catsname',
+                    $this->t(
+                      'Oh No! The Name of Your Cat is Shorter Than 2 Symbols('
+                    )
+                );
+            } elseif (strlen($title) > 32) {
+                $form_state->setErrorByName(
+                    'catsname',
+                    $this->t(
+                      'Oh No! The Name of Your Cat is Longer Than 32 Symbols('
+                    )
+                );
+            }
+        } elseif (!ctype_alnum($title)) {
             $form_state->setErrorByName(
-              'catsname',
-              $this->t('Mail: Oh No! Your Email %title is Invalid', ['%title' => $email])
+                'catsname',
+                $this->t('Oh No! Please Use Alphanumeric chatacters')
             );
-            break;
-          }
         }
-      }
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            for ($i = 0; $i < (strlen($email)); $i++) {
+                if (!preg_match($requiers, $email[$i])) {
+                    $form_state->setErrorByName(
+                        'catsname',
+                        $this->t('Mail: Oh No! Your Email %title is Invalid', ['%title' => $email])
+                    );
+                    break;
+                }
+            }
+        }
     }
+    public function validateFormAjaxFile
+    (array &$form, FormStateInterface $form_state): AjaxResponse
+    {
+        $file = $form_state->getValue('catsPhoto');
+        $response = new AjaxResponse();
+        if ($file['size'] > 2*1024*1024) {
+            $message = $this->t(
+              "Cat's Photo: Oh No! Your File is Larger Than 2MB("
+            );
+        }
+        $response->addCommand(new MessageCommand($message, null, ['type'=> 'error']));
+        return $response;
 
+    }
     /**
      * {@inheritDoc}
      */
-    public function validateFormAjax(array &$form, FormStateInterface $form_state)
+    public function validateFormAjax(array &$form, FormStateInterface $form_state): AjaxResponse
     {
-      $email = $form_state->getValue('catsemail');
-      $title = $form_state->getValue('catsname');
-      $requiers = '/[-_@A-Za-z.]/';
-      $responseMail = new AjaxResponse();
-      $responses = new AjaxResponse();
-      if ((ctype_alnum($title)) && ((strlen($title) < 2) || (strlen($title) > 32))) {
-        if (strlen($title) < 2) {
-          $message =
-            $this->t("Cat's Name: Oh No! The Name of Your Cat is Shorter Than 2 Symbols(");
-        }
-        if (strlen($title) > 32) {
-          $message =
-            $this->t("Cat's Name: Oh No! The Name of Your Cat is Longer Than 32 Symbols(");
-        }
-        $responses -> addCommand(new MessageCommand($message, null, ['type'=> 'error']));
-      } elseif (ctype_alnum($title)) {
+        $email = $form_state->getValue('catsemail');
+        $title = $form_state->getValue('catsname');
+        $file = $form_state->getValue('catsPhoto');
+        $requiers = '/[-_@A-Za-z.]/';
+        $responses = new AjaxResponse();
+        if ((ctype_alnum($title)) && ((strlen($title) < 2) || (strlen($title) > 32))) {
+            if (strlen($title) < 2) {
+                $message = $this->t(
+                  "Cat's Name: Oh No! The Name of Your Cat is Shorter Than 2 Symbols("
+                );
+            }
+            if (strlen($title) > 32) {
+                $message = $this->t(
+                  "Cat's Name: Oh No! The Name of Your Cat is Longer Than 32 Symbols("
+                );
+            }
+            $responses -> addCommand(new MessageCommand($message, null, ['type'=> 'error']));
+        } elseif (ctype_alnum($title)) {
 
-        $message =
-          $this->t("Cat's Name: Oh Yes! You Added Your Cat: %title.", ['%title' => $title]);
-        $responses->addCommand(new MessageCommand($message));
-      } else {
-        $message = $this->t("Cat's Name: Oh No! Please Use Alphanumeric chatacters");
-        $responses -> addCommand(new MessageCommand($message, null, ['type'=> 'error']));
-      }
-      if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $tmp = 0;
-        for ($i = 0; $i < (strlen($email)); $i++) {
-          if (!preg_match($requiers, $email[$i])) {
-            $message = $this->t('Mail: Oh No! Your Email %title is Invalid', ['%title' => $email]);
-            $tmp++;
+            $message = $this->t(
+              "Cat's Name: Oh Yes! You Added Your Cat: %title.", ['%title' => $title]
+            );
+            $responses->addCommand(new MessageCommand($message));
+        } else {
+            $message = $this->t(
+              "Cat's Name: Oh No! Please Use Alphanumeric chatacters"
+            );
+            $responses -> addCommand(new MessageCommand($message, null, ['type'=> 'error']));
+        }
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $tmp = 0;
+            for ($i = 0; $i < (strlen($email)); $i++) {
+                if (!preg_match($requiers, $email[$i])) {
+                    $message = $this->t('Mail: Oh No! Your Email %title is Invalid', ['%title' => $email]);
+                    $tmp++;
+                    $responses->addCommand(new MessageCommand($message, null, ['type'=> 'error']));
+                    break;
+                }
+            }
+            if ($tmp == 0) {
+            }
+        }
+        else {
+            $message =
+            $this->t('Mail: Oh No! Your Email %title is Invalid', ['%title' => $email]);
             $responses->addCommand(new MessageCommand($message, null, ['type'=> 'error']));
-            break;
-          }
+            //      $response -> setErrorByName($email, $this->t('Your name is less than 2 symbols.'));
         }
-        if ($tmp == 0) {
-          $message =
-            $this->t('Mail: Oh Yes! Now You Can Add Your Mail: %title.', ['%title' => $email]);
-          $responses->addCommand(new MessageCommand($message, null, ['type'=> 'error']));
-        }
-      } else {
-        $message =
-          $this->t('Mail: Oh No! Your Email %title is Invalid', ['%title' => $email]);
-        $responses->addCommand(new MessageCommand($message, null, ['type'=> 'error']));
-        //      $response -> setErrorByName($email, $this->t('Your name is less than 2 symbols.'));
-      }
         return $responses;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function validateFormAjaxEmail(array &$form, FormStateInterface $form_state)
+    public function validateFormAjaxEmail(array &$form, FormStateInterface $form_state): AjaxResponse
     {
         $email = $form_state->getValue('catsemail');
         $response = new AjaxResponse();
@@ -189,31 +231,24 @@ class CatsForms extends FormBase
                 if (!preg_match($requiers, $email[$i])) {
                     $message = $this->t('Mail: Oh No! Your Email %title is Invalid', ['%title' => $email]);
                     $tmp++;
-                  $response->addCommand(
-                    new HtmlCommand(
-                      '.false_email', $message
-                    )
-                  );
+                    $response->addCommand(
+                        new HtmlCommand(
+                            '.false_email', $message
+                        )
+                    );
                     break;
                 }
             }
             if ($tmp == 0) {
-                $message =
-                  $this->t('Mail: Oh Yes! Now You Can Add Your Mail: %title.', ['%title' => $email]);
-              $response->addCommand(
-                new HtmlCommand(
-                  '.false_email', $message
-                )
-              );
             }
         } else {
             $message =
               $this->t('Mail: Oh No! Your Email %title is Invalid', ['%title' => $email]);
-          $response->addCommand(
-            new HtmlCommand(
-              '.false_email', $message
-            )
-          );
+            $response->addCommand(
+                new HtmlCommand(
+                    '.false_email', $message
+                )
+            );
             //      $response -> setErrorByName($email, $this->t('Your name is less than 2 symbols.'));
         }
         return $response;
@@ -222,14 +257,21 @@ class CatsForms extends FormBase
     /**
      * {@inheritDoc}
      */
-    public function submitForm(array &$form, FormStateInterface $form_state)
+    public function submitForm(array &$form, FormStateInterface $form_state): void
     {
         $title = $form_state->getValue('catsname');
         \Drupal::messenger()->addStatus($this->t('You Added Your Cat: %title.', ['%title' => $title]));
     }
-  public function setMessage(array &$form, FormStateInterface $form_state) {
-    return $form;
-  }
-
-
+    public function setMessage(array &$form, FormStateInterface $form_state): array
+    {
+        return $form;
+    }
+    private function getAllowedFileExtensions(): array
+    {
+        return array('jpg jpeg png');
+    }
+    private function getAllowedFileSize(): array
+    {
+        return array(2097152);
+    }
 }

@@ -6,12 +6,17 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  color: #6667AB;
 }
 html,
 body {
   background: #c7c7c7;
   min-height: 100vh;
+  /*font-family: 'Comic Sans MS', 'Comic Sans', cursive;*/
 }
+/*body {*/
+/*  font-family: 'Comic Sans MS', 'Comic Sans', cursive;*/
+/*}*/
 [role="main"] {
   flex-grow: 1;
 }
@@ -51,7 +56,18 @@ body {
     width: 768px;
   }
 }
-.false_email {
+.false_email, .messages--error {
   color: red;
   font-size: 12px;
 }
+/*.navbar {*/
+/*  height: 300px;*/
+/*  min-width: 100%;*/
+/*  overflow: hidden;*/
+/*  background-size: cover;*/
+/*  background: #6667ab center center;*/
+/*  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;*/
+/*}*/
+/*.dialog-off-canvas-main-canvas .navbar-default {*/
+/*  background-color: #6667ab;*/
+/*}*/

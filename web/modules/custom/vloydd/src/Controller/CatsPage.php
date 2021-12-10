@@ -11,7 +11,7 @@ class CatsPage
     /**
      *
      */
-    public function content()
+    public function content(): array
     {
         $form = \Drupal::formBuilder()->getForm('Drupal\vloydd\Form\CatsForms');
         return [

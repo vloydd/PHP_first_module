@@ -9,7 +9,7 @@
   height: 100%;
 }
 html, body {
-  background: #c7c7c7;
+  background: linear-gradient(#141e30,#ffcac9);
   min-height: 100vh;
 }
 [role="main"] {
@@ -18,20 +18,38 @@ html, body {
 .footer {
   margin-top: auto;
   display: block;
-  background: #373645;
+  background: #141e30;
 }
 .row {
   margin: 0;
 }
-.dialog-off-canvas-main-canvas .navbar-header .navbar-brand, footer .navbar-brand {
-  background: #373645;
+.dialog-off-canvas-main-canvas .navbar-default {
+background: rgba(0,0,0, 12%);
   color: #c7c7c7;
+}
+.dialog-off-canvas-main-canvas {
+  color: #c7c7c7;
+}
+.dialog-off-canvas-main-canvas .navbar-header .navbar-brand, footer .navbar-brand {
+  background: #141e30;
   border: 1px solid #c7c7c7;
+}
+.dialog-off-canvas-main-canvas .navbar-header .navbar-brand {
+  border: none;
+}
+.dialog-off-canvas-main-canvas .navbar-brand {
+  color: #c7c7c7;
+}
+a:hover, .dialog-off-canvas-main-canvas .navbar-header .navbar-brand:hover, .dialog-off-canvas-main-canvas .navbar-nav > li > a:hover {
+  color: #CEB7B6;
 }
 @media (max-width: 767px) {
   .navbar {
     width: 100%;
   }
+}
+.navbar-default .navbar-nav > li > .is-active {
+  background: #c7c7c7;
 }
 /*header {*/
 /*  min-height: 700px;*/

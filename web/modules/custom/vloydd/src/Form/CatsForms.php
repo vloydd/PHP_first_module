@@ -30,9 +30,9 @@ class CatsForms extends FormBase
         $form['message'] = [
         '#type' => 'markup',
         '#markup' =>
-        '<div class="form_message_intro">
+        '<h2 class="form_message_intro">
             Hello! You can add here a photo of your cat.
-         </div>',
+         </h2>',
         ];
         //      $form['message_eror'] = [
         //        '#type' => 'markup',
@@ -43,16 +43,16 @@ class CatsForms extends FormBase
         //      ];
         $form['catsname'] = [
         '#type' => 'textfield',
-        '#title' => $this->t("Your Cat's Name:"),
+//        '#title' => $this->t("Your Cat's Name:"),
         '#description' => $this->t('MinLength: 2 symb, MaxLength: 32 symb'),
-        '#placeholder' => $this->t("Enter Your Cat's Name"),
+        '#placeholder' => $this->t("Your Cat's Name"),
         '#required' => true,
         ];
         $form['catsemail'] = [
         '#type' => 'email',
-        '#title' => $this->t("Your Email:"),
+//        '#title' => $this->t("Your Email:"),
         '#description' => $this->t('Only Alpha, ., _, - and @ '),
-        '#placeholder' => $this->t("Enter Your Email:"),
+        '#placeholder' => $this->t("Your Email:"),
         '#required' => true,
         '#ajax' => [
         'callback' => '::validateFormAjaxEmail',
@@ -69,10 +69,10 @@ class CatsForms extends FormBase
         $form['catsPhoto'] = [
         '#type' => 'managed_file',
         '#name' => 'catPhoto',
-        '#title' => $this->t("Your Cat's Photo:"),
+//        '#title' => $this->t("Your Cat's Photo:"),
         '#description' =>
           $this->t('Avaiable Formats: jpeg, jpg, png; MaxSize - 2MB'),
-        '#placeholder' => $this->t("Enter Your Cat's Name"),
+        '#placeholder' => $this->t("Your Cat's Photo"),
         '#required' => true,
         '#upload_validators' => array(
           'file_validate_extensions' => $this->getAllowedFileExtensions(),

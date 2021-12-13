@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  color: #6667AB;
+  color: #c7c7c7;
 }
 html,
 body {
@@ -23,7 +23,7 @@ body {
 .footer {
   margin-top: auto;
   display: block;
-  background: #373645;
+  background: #141e30;
 }
 .row {
   margin: 0;
@@ -41,24 +41,125 @@ body {
 .vloydd-cats-form input {
   padding: 5px 20px;
   max-width: 768px;
+  border: none;
+  font-size: 16px;
+  outline: none;
+  border-bottom: 1px solid #6caca0;
+  background: transparent;
+  transition: none;
+  box-shadow: rgb(0 0 0 / 13%) 0px 2px 0px 0px;
+  border-radius: 0;
 }
-.vloydd-cats-form button {
-  background: #373645;
-  border-color: #4cae4c;
-  padding: 7px 15px 3px;
-}
-.vloydd-cats-form button:hover {
-  border-color: #373645;
-  background: #4cae4c;
-}
+/*.vloydd-cats-form button {*/
+/*  background: #373645;*/
+/*  border-color: #4cae4c;*/
+/*  padding: 7px 15px 3px;*/
+/*}*/
+/*.vloydd-cats-form button:hover {*/
+/*  border-color: #373645;*/
+/*  background: #4cae4c;*/
+/*}*/
 @media (min-width: 992px) {
   input [data-drupal-selector="edit-catsemail"] {
     width: 768px;
   }
 }
 .false_email, .messages--error {
-  color: red;
+  color: rgb(244 113 116);
   font-size: 12px;
+}
+.form-group {
+  margin-bottom: 25px;
+}
+.vloydd-cats-form {
+  max-width: 400px;
+  display: block;
+  margin: auto;
+  box-sizing: border-box;
+  background: rgba(0,0,0,0.1);
+  padding: 40px;
+  border-radius: 10px;
+  text-align: start;
+}
+.form_message_intro {
+  text-align: center;
+  font-size: 27px;
+  margin: 0 0 30px;
+}
+.vloydd-cats-form input::placeholder {
+  color: #c7c7c7;
+}
+.vloydd-cats-form input:focus {
+  box-shadow: 0 3px 2px -2px rgb(255 202 201 / 60%);
+}
+.vloydd-cats-form input {
+  color: #c7c7c7;
+}
+#edit-catsphoto-upload:focus {
+  outline: none;
+}
+.file--image a, .alert-success  {
+  word-break: break-all;
+}
+.vloydd-cats-form .has-error .form-control  {
+  box-shadow: none;
+  box-shadow: 0 3px 2px -2px rgb(244 113 116 / 60%);
+  outline: none;
+}
+.vloydd-cats-form .has-error .form-control:hover {
+  box-shadow: 0 3px 2px -2px rgb(244 113 116 / 60%);
+}
+::-webkit-file-upload-button {
+  background: transparent;
+  color: #c7c7c7;
+  outline: none;
+}
+::-webkit-file-upload-button:hover {
+  background-color: #c39d5a;
+  color: white;
+  cursor: pointer;
+}
+.alert {
+  max-width: 400px;
+  margin: 0 auto 20px;
+  display: flex;
+  flex-direction: column;
+}
+.alert span {
+  margin-left:  auto;
+}
+.alert p {
+  text-align: center;
+}
+.vloydd-cats-form .alert-dismissable, .vloydd-cats-form .alert-dismissible {
+  padding-right: 15px;
+}
+::-webkit-file-upload-button , .vloydd-cats-form [data-drupal-selector="edit-submit"], .vloydd-cats-form .btn-success {
+  display: inline-block;
+  /*padding: 10px 20px;*/
+  color: #6caca0;
+  text-transform: uppercase;
+  text-align: center;
+  transition: 2s;
+  outline: none;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #6caca0;
+  background: transparent;
+}
+::-webkit-file-upload-button:hover, .vloydd-cats-form [data-drupal-selector="edit-submit"]:hover, .vloydd-cats-form .btn-success:hover {
+  background: #6caca0;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #6caca0, 0 0 10px #6caca0, #6caca0;
+  border-bottom: 1px solid #6caca0;
+}
+.vloydd-cats-form [data-drupal-selector="edit-submit"] .btn-success:focus, .btn-success:focus, .vloydd-cats-form [data-drupal-selector="edit-submit"] .btn-success:active, .vloydd-cats-form .btn-success:active {
+  border: none;
+  border-radius: 5px;
+  outline: 0;
+  outline-offset: 0;
+  background: #ffcac9;
+  color: #6caca0;
 }
 /*.navbar {*/
 /*  height: 300px;*/

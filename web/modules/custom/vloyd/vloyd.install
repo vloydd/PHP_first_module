@@ -5,7 +5,8 @@
 
 function vloyd_schema(): array {
   $schema['vloyd'] = [
-//    'description' => 'Table for Your Cats',
+    # Creates table
+    'description' => 'Table of Your Cats',
     'fields' => [
       'id' => [
         'type' => 'serial',
@@ -29,16 +30,19 @@ function vloyd_schema(): array {
       ],
       'timestamp' => [
         'type' => 'int',
-        'unsigned' => TRUE,
         'not null' => TRUE,
-        'default' => 0,
       ],
     ],
     'primary key' => [
       'id',
     ],
   ];
-
   return $schema;
-
+}
+/**
+ * Implements hook_uninstall().
+ */
+function vloyd_uninstall() {
+  # Remove table
+  \Drupal::state()->delete('vloyd.vloyd');
 }

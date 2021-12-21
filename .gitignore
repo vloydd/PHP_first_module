@@ -2,9 +2,11 @@
 /vendor/
 web/core/
 web/modules/contrib/
+web/modules/**/custom/test/
 web/themes/contrib/
 web/profiles/contrib/
 
 web/themes/**/node_modules/
+web/sites/**/vloyd_cats_photos/
 web/themes/custom/bootstrap/
 /.docksal/

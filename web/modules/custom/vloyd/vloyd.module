@@ -11,7 +11,8 @@ function vloyd_theme($existing, $type, $theme, $path) {
   return [
     "vloyd-theme" => [
       "variables" => [
-        'form' => NULL,
+        'form' => [],
+        'cats' => [],
       ],
     ],
   ];

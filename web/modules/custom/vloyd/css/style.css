@@ -83,7 +83,8 @@ body {
 }
 .form_message_intro {
   text-align: center;
-  font-size: 27px;
+  font-size: 23px;
+  text-transform: uppercase;
   margin: 0 0 30px;
 }
 .vloydd-cats-form input::placeholder {

@@ -3,16 +3,20 @@
 namespace Drupal\vloyd\Form;
 
 use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\Core\Ajax\MessageCommand;
+use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Render\Element\Ajax;
+use Drupal\file\Entity\File;
+use Drupal\Core\Url;
 
 /**
- *
+ * {@inheritdoc}
  */
 class CatsForms extends FormBase
 {
-
   /**
    * {@inheritDoc}
    */
@@ -41,6 +45,9 @@ class CatsForms extends FormBase
         '#type' => 'textfield',
         '#description' => $this->t('MinLength: 2 symb, MaxLength: 32 symb'),
         '#placeholder' => $this->t("Your Cat Name"),
+          '#attributes' => [
+            'autocomplete' => 'off'
+          ],
         ];
         $form['email'] = [
           '#title' => $this->t('Your Email:'),
@@ -60,7 +67,7 @@ class CatsForms extends FormBase
           ],
           '#suffix' => '<p class="false_email"></p>',
         ];
-        $form['catsPhoto'] = [
+        $form['image'] = [
           '#title' => $this->t('The Photo of Your Cat:'),
         '#type' => 'managed_file',
         '#name' => 'catPhoto',
@@ -79,6 +86,9 @@ class CatsForms extends FormBase
         '#type' => 'submit',
         '#button_type' => 'primary',
         '#value' => $this->t('Add Cat'),
+          '#attributes' => [
+            'class' => ['btn', 'btn-warning']
+          ],
         '#ajax' => [
         'callback' => '::setMessage',
           'wrapper' => 'form-wrapper',
@@ -94,13 +104,14 @@ class CatsForms extends FormBase
     }
 
   /**
-   * {@inheritDoc}
+   * @param array $form
+   * @param FormStateInterface $form_state
    */
     public function validateForm(array &$form, FormStateInterface $form_state): void
     {
         $title = $form_state->getValue('name');
         $email = $form_state->getValue('email');
-        $file = $form_state->getValue('catsPhoto');
+        $file = $form_state->getValue('image');
         $emptyfile = empty($file);
         $requiers = '/[-_@A-Za-z.]/';
         if (strlen($title) < 2) {
@@ -118,17 +129,19 @@ class CatsForms extends FormBase
                 )
             );
         }
-        for ($i = 0; $i < (strlen($email)); $i++) {
-            if (!preg_match($requiers, $email[$i])) {
-                $form_state->setErrorByName(
-                    'email',
-                    $this->t('Mail: Oh No! Your Email %title is Invalid', ['%title' => $email])
-                );
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            for ($i = 0; $i < (strlen($email)); $i++) {
+                if (!preg_match($requiers, $email[$i])) {
+                    $form_state->setErrorByName(
+                        'email',
+                        $this->t('Mail: Oh No! Your Email %title is Invalid', ['%title' => $email])
+                    );
+                }
             }
         }
         if ($emptyfile) {
             $form_state->setErrorByName(
-                'catsPhoto',
+                'image',
                 $this->t('File: Oh No! Your Photo is Empty')
             );
         }
@@ -178,16 +191,51 @@ class CatsForms extends FormBase
         }
         return $response;
     }
-    public function setMessage(array &$form, FormStateInterface $form_state): array
+  /**
+   * {@inheritDoc}
+   */
+    public function setMessage(array &$form, FormStateInterface $form_state)
     {
+        $response = new AjaxResponse();
+        if (!$form_state->hasAnyErrors()) {
+            $url = Url::fromRoute('vloydd.cats-page');
+            $command = new RedirectCommand($url->toString());
+            $response->addCommand($command);
+            return $response;
+        }
         return $form;
     }
 
   /**
    * {@inheritDoc}
    */
-    public function submitForm(array &$form, FormStateInterface $form_state): void
+    public function submitForm(array &$form, FormStateInterface $form_state): AjaxResponse
     {
-        $this->messenger()->addStatus($this->t('You Added Your Cat: %title.', ['%title' => $form_state->getValue('name')]));
+
+        $image = $form_state->getValue('image');
+        $data = array(
+        'cats_name' => $form_state->getValue('name'),
+        'email' => $form_state->getValue('email'),
+        'image' => $image[0],
+          'timestamp' => time(),
+        );
+
+      # save file as Permanent
+        $file = File::load($image[0]);
+        $file->setPermanent();
+        $file->save();
+
+      # insert data to database
+        \Drupal::database()->insert('vloyd')->fields($data)->execute();
+
+        $this->messenger()
+        ->addStatus($this->t('You Added Your Cat: %title.', ['%title' => $form_state->getValue('name')]));
+
+
+        $response = new AjaxResponse();
+        $url = Url::fromRoute('vloydd.cats-page');
+        $command = new RedirectCommand($url);
+        $response->addCommand($command);
+        return $response;
     }
 }

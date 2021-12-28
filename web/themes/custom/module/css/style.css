@@ -9,7 +9,7 @@
   height: 100%;
 }
 html, body {
-  background: linear-gradient(#141e30,#ffcac9);
+  background: linear-gradient(#141e30,#9d6f55);
   min-height: 100vh;
 }
 [role="main"] {

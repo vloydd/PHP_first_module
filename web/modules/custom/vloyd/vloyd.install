@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Implements hook_schema().
  */
-
 function vloyd_schema(): array {
   $schema['vloyd'] = [
     # Creates table

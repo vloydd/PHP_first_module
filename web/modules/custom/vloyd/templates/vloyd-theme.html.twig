@@ -1,4 +1,12 @@
 {{ attach_library('vloyd/vloyd_libraries') }}
 {{ form }}
-{% for items in cats %}
-{% endfor %}
+<div class="vloyd_table_wrapper">
+  {% for items in cats %}
+    <div class="vloyd_table">
+      <div class="vloyd_name vloyd_item">{{ items.name }}</div>
+      <div class="vloyd_email vloyd_item">{{ items.email }}</div>
+      <a class="vloyd_image vloyd_item" target="_blank" href="{{ items.imageurl }}">{{ items.image }}</a>
+      <div class="vloyd_time vloyd_item">{{ items.time }}</div>
+    </div>
+  {% endfor %}
+</div>

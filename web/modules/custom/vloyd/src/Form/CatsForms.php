@@ -8,17 +8,17 @@ use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Render\Element\Ajax;
 use Drupal\file\Entity\File;
 use Drupal\Core\Url;
 
 /**
- * {@inheritdoc}
+ * Our Form Class
  */
 class CatsForms extends FormBase
 {
   /**
-   * {@inheritDoc}
+   * This func is form ID
+   * @return  string
    */
     public function getFormId() :string
     {
@@ -26,7 +26,7 @@ class CatsForms extends FormBase
     }
 
   /**
-   * {@inheritDoc}
+   * This func is for build our form
    */
     public function buildForm(array $form, FormStateInterface $form_state): array
     {
@@ -102,10 +102,12 @@ class CatsForms extends FormBase
         ];
         return $form;
     }
-
   /**
+   * This func validate our form
    * @param array $form
    * @param FormStateInterface $form_state
+   *  @return  void
+   *
    */
     public function validateForm(array &$form, FormStateInterface $form_state): void
     {
@@ -148,7 +150,11 @@ class CatsForms extends FormBase
     }
 
   /**
-   * {@inheritDoc}
+   * This func validate our email
+   * @param array $form
+   * @param FormStateInterface $form_state
+   *  @return  AjaxResponse
+   *
    */
     public function validateFormAjaxEmail(array &$form, FormStateInterface $form_state): AjaxResponse
     {
@@ -192,7 +198,7 @@ class CatsForms extends FormBase
         return $response;
     }
   /**
-   * {@inheritDoc}
+   *This func is for AJAX Redirect
    */
     public function setMessage(array &$form, FormStateInterface $form_state)
     {
@@ -207,9 +213,9 @@ class CatsForms extends FormBase
     }
 
   /**
-   * {@inheritDoc}
+   * This func submitting form
    */
-    public function submitForm(array &$form, FormStateInterface $form_state): AjaxResponse
+    public function submitForm(array &$form, FormStateInterface $form_state)
     {
 
         $image = $form_state->getValue('image');
@@ -227,15 +233,8 @@ class CatsForms extends FormBase
 
       # insert data to database
         \Drupal::database()->insert('vloyd')->fields($data)->execute();
-
+      # succesful message
         $this->messenger()
         ->addStatus($this->t('You Added Your Cat: %title.', ['%title' => $form_state->getValue('name')]));
-
-
-        $response = new AjaxResponse();
-        $url = Url::fromRoute('vloydd.cats-page');
-        $command = new RedirectCommand($url);
-        $response->addCommand($command);
-        return $response;
     }
 }

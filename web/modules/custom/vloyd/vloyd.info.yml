@@ -3,3 +3,4 @@ description: This module creates a page with a list of cats and a form where use
 type: module
 core_version_requirement: ^9.0
 package: vloyd
+libraries: vloyd/vloyd

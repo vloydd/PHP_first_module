@@ -150,6 +150,7 @@ body {
   border: none;
   border-radius: 0;
   border-bottom: 1px solid #6caca0;
+  font-family: 'Permanent Marker', cursive;
   background: transparent;
 }
 ::-webkit-file-upload-button:hover, .vloydd-cats-form [data-drupal-selector="edit-submit"]:hover, .vloydd-cats-form .btn-success:hover {
@@ -158,12 +159,12 @@ body {
   box-shadow: 0 0 15px rgb(244 113 116 / 60%), 0 0 20px rgb(244 113 116 / 60%);
   border-bottom: 1px solid #6caca0;
 }
-.vloydd-cats-form [data-drupal-selector="edit-submit"] .btn-success:focus, .btn-success:focus, .vloydd-cats-form [data-drupal-selector="edit-submit"] .btn-success:active, .vloydd-cats-form .btn-success:active {
+.vloydd-cats-form [data-drupal-selector="edit-submit"] .btn-success:focus, .btn-success:focus, .vloydd-cats-form [data-drupal-selector="edit-submit"] .btn-success:active, .vloydd-cats-form .btn-success:active, .vloyd-delete, .vloyd-edit {
   border: none;
   border-radius: 5px;
   outline: 0;
   outline-offset: 0;
-  background: #ffcac9;
+  /*background: #ffcac9;*/
   color: #6caca0;
 }
 input:-webkit-autofill,
@@ -260,6 +261,7 @@ input:-webkit-autofill {
 }
 .vloyd_time {
   max-width: 300px;
+  font-size: 22px;
 }
 @media (min-width: 767px) {
   .vloyd_time {
@@ -273,10 +275,6 @@ input:-webkit-autofill {
   }
 }
 @media (max-width: 767px) {
-  .vloyd_table .vloyd_image {
-    /*height: 100px;*/
-    /*width: 100px;*/
-  }
   .vloyd_item {
     padding: 10px 0;
   }
@@ -285,5 +283,35 @@ input:-webkit-autofill {
   }
   .vloyd_email {
     font-size: 17px;
+  }
+}
+#file-upload-button {
+  font-family: 'Permanent Marker', cursive !important;
+}
+.vloyd-delete, .vloyd-edit {
+  border: 1px solid;
+  padding: 5px 10px;
+  margin: 10px 0;
+}
+.edit-delete {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+[aria-describedby="drupal-modal"], .ui-widget-header, .confirmation, .ui-widget-content button, [aria-describedby="drupal-modal"] .ui-widget {
+  /*background: rgba(0,0,0,0.5);*/
+  font-family: 'Permanent Marker', cursive;
+
+  /*width: 400px;*/
+}
+[role="dialog"] {
+  width: 400px;
+}
+@media (max-width: 767px) {
+  .edit-delete {
+    flex-direction: row;
+  }
+  .vloyd-delete, .vloyd-edit {
+    margin: 10px;
   }
 }

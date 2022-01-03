@@ -204,7 +204,7 @@ class CatsForms extends FormBase
     {
         $response = new AjaxResponse();
         if (!$form_state->hasAnyErrors()) {
-            $url = Url::fromRoute('vloydd.cats-page');
+            $url = Url::fromRoute('vloyd.cats-page');
             $command = new RedirectCommand($url->toString());
             $response->addCommand($command);
             return $response;

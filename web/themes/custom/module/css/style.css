@@ -2,11 +2,14 @@
  * If using a CSS pre-processor, tell it to overwrite this file. If not, place
  * your custom CSS modifications here.
  */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Licorice&family=Permanent+Marker&family=Shizuru&display=swap');
 .dialog-off-canvas-main-canvas {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   height: 100%;
+  color: #c7c7c7;
+  font-family: 'Permanent Marker', cursive;
 }
 html, body {
   background: linear-gradient(#141e30,#9d6f55);

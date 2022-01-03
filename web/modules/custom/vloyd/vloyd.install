@@ -39,6 +39,7 @@ function vloyd_schema(): array {
   ];
   return $schema;
 }
+
 /**
  * Implements hook_uninstall().
  */

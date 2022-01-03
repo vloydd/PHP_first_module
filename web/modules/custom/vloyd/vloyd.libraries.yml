@@ -1,4 +1,8 @@
-vloyd_libraries:
+vloyd.page:
   css:
     base:
       css/style.css: {}
+vloyd:
+  dependencies:
+    - core/jquery
+    - core/ajax

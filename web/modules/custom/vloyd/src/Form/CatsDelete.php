@@ -16,65 +16,66 @@ class CatsDelete extends ConfirmFormBase {
    *
    * @var int
    */
-    public $id;
+  public $id;
 
   /**
    * {@inheritdoc}
    */
-    public function getFormId(): string {
-        return 'vloyd_delete_form';
-    }
+  public function getFormId(): string {
+    return 'vloyd_delete_form';
+  }
 
   /**
    * {@inheritdoc}
    */
-    public function buildForm(array $form, FormStateInterface $form_state, $id = NULL) {
-         $this->id = $id;
-        return parent::buildForm($form, $form_state);
-    }
+  public function buildForm(array $form, FormStateInterface $form_state, $id = NULL): array {
+    $this->id = $id;
+    return parent::buildForm($form, $form_state);
+  }
 
   /**
-   * @inheritDoc
+   * {@inheritDoc}
    */
-    public function getQuestion() {
-       return $this->t('Do you want to delete  this cat?');
-    }
+  public function getQuestion() {
+    return $this->t('Do you want to delete  this cat?');
+  }
 
   /**
-   * @inheritDoc
+   * {@inheritDoc}
    */
-    public function getDescription() {
-      return t('Do you really want to delete cat with id %id ?', array('%id' => $this->id));
-    }
-
-  /**
-   * {@inheritdoc}
-   */
-    public function getConfirmText() {
-        return $this->t('Delete');
-    }
+  public function getDescription() {
+    return t('Do you really want to delete cat with id %id ?', ['%id' => $this->id]);
+  }
 
   /**
    * {@inheritdoc}
    */
-    public function getCancelText() {
-        return $this->t('Cancel');
-    }
+  public function getConfirmText() {
+    return $this->t('Delete');
+  }
 
   /**
-   * @inheritDoc
+   * {@inheritdoc}
    */
-    public function getCancelUrl() {
-        return new Url('vloyd.cats-page');
-    }
+  public function getCancelText() {
+    return $this->t('Cancel');
+  }
 
   /**
-   * @inheritDoc
+   * {@inheritDoc}
    */
-    public function submitForm(array &$form, FormStateInterface $form_state) {
-        \Drupal::database()->delete('vloyd')->condition('id', $this->id)->execute();
-        $this->messenger()
-        ->addStatus($this->t('You Deleted Your Cat'));
-        $form_state->setRedirect('vloyd.cats-page');
-    }
+  public function getCancelUrl() {
+    return new Url('vloyd.cats-page');
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    \Drupal::database()->delete('vloyd')->condition('id', $this->id)->execute();
+    $this->messenger()
+      ->addStatus($this->t('You Deleted Your Cat'));
+    $form_state->setRedirect('vloyd.cats-page');
+  }
+
 }

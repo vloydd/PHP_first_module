@@ -29,6 +29,7 @@ class CatsForms extends FormBase {
    * This func is for build our form.
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
+
     $form['#prefix'] = '<div id="form-wrapper">';
     $form['#suffix'] = '</div>';
     $form['message'] = [
@@ -63,6 +64,7 @@ class CatsForms extends FormBase {
       ],
       '#attributes' => [
         'data-disable-refocus' => 'true',
+        'autocomplete' => 'off',
       ],
       '#suffix' => '<p class="false_email"></p>',
     ];

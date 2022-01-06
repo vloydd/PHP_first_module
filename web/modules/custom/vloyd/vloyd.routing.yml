@@ -6,19 +6,42 @@ vloyd.cats-page:
   requirements:
     _permission: 'access content'
 
+vloyd.cats-admin:
+  path: '/admin/structure/catslist'
+  defaults:
+    _controller: '\Drupal\vloyd\Controller\CatsAdmin::content'
+    _title: 'Administer Cats'
+  requirements:
+    _permission: 'administer site configuration'
+
 vloyd.delete_form:
   path: '/vloyd/cats/{id}/delete'
   defaults:
     _form: '\Drupal\vloyd\Form\CatsDelete'
     _title: 'DeleteForm'
   requirements:
-#    _access: 'TRUE'
     _permission: 'administer site configuration'
 
 vloyd.edit_form:
   path: '/vloyd/cats/{id}/edit'
   defaults:
     _form: '\Drupal\vloyd\Form\CatsEdits'
-    _title: 'EditForm'
+    _title: 'Edit Form'
+  requirements:
+    _permission: 'administer site configuration'
+
+vloyd.delete_form_admin:
+  path: '/admin/structure/catslist/{id}/delete'
+  defaults:
+    _form: '\Drupal\vloyd\Form\CatsDeleteAdmins'
+    _title: 'DeleteForm'
+  requirements:
+    _permission: 'administer site configuration'
+
+vloyd.edit_form_admin:
+  path: '/admin/structure/catslist/{id}/delete'
+  defaults:
+    _form: '\Drupal\vloyd\Form\CatsEditsAdmin'
+    _title: 'Edit Form'
   requirements:
     _permission: 'administer site configuration'

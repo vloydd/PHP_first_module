@@ -15,6 +15,7 @@ class CatsPage extends ControllerBase {
    * This func shows our content.
    *
    * @return array
+   *   returns our CatsForm and Theme and Render Table for Results.
    */
   public function content(): array {
     $form = \Drupal::formBuilder()->getForm('Drupal\vloyd\Form\CatsForms');

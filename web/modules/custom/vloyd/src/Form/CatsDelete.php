@@ -36,28 +36,28 @@ class CatsDelete extends ConfirmFormBase {
   /**
    * {@inheritDoc}
    */
-  public function getQuestion() {
+  public function getQuestion():string {
     return $this->t('Do you want to delete  this cat?');
   }
 
   /**
    * {@inheritDoc}
    */
-  public function getDescription() {
-    return t('Do you really want to delete cat with id %id ?', ['%id' => $this->id]);
+  public function getDescription():string {
+    return $this->t('Do you really want to delete cat with id %id ?', ['%id' => $this->id]);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getConfirmText() {
+  public function getConfirmText():string {
     return $this->t('Delete');
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getCancelText() {
+  public function getCancelText():string {
     return $this->t('Cancel');
   }
 
@@ -71,10 +71,10 @@ class CatsDelete extends ConfirmFormBase {
   /**
    * {@inheritDoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
     \Drupal::database()->delete('vloyd')->condition('id', $this->id)->execute();
     $this->messenger()
-      ->addStatus($this->t('You Deleted Your Cat'));
+      ->addStatus($this->t('You Deleted Your Cat' ));
     $form_state->setRedirect('vloyd.cats-page');
   }
 

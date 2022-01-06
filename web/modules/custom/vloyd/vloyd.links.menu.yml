@@ -1,0 +1,6 @@
+cats-admin.structure:
+  title: 'Cats List'
+  description: 'Administer Cats List'
+  parent: system.admin_structure
+  route_name: vloyd.cats-admin
+  weight: 5

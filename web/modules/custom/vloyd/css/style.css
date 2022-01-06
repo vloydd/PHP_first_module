@@ -350,3 +350,47 @@ input:-webkit-autofill {
 .ui-dialog-buttonset .form-submit {
   padding: 3px 8px;
 }
+.path-vloyd .ui-dialog[tabindex="-1"] .ui-dialog-content, .path-vloyd .ui-dialog {
+  padding: 0;
+}
+.path-vloyd .ui-dialog[tabindex="-1"] {
+  background: transparent;
+  border: none;
+}
+.vloydd-cats-edit {
+  background: linear-gradient(#9d6f55, #141e30);
+  background: #141e30;
+}
+.path-vloyd label {
+  color: white;
+}
+.path-vloyd .ui-dialog-titlebar {
+  background: #141e30;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.path-vloyd .ui-dialog-title {
+  color: white;
+}
+.path-vloyd .ui-dialog-titlebar-close {
+  display: flex;
+}
+.path-vloyd .ui-dialog-titlebar-close::after {
+  content: 'x';
+  font-size: 21px;
+  color: #141e30;
+  margin: -9px auto 0;
+}
+.path-vloyd .vloyd-delete-form.confirmation {
+  background: #141e30;
+  border-radius: 10px 10px 0 0;
+  padding: 10px;
+  color: white;
+}
+.path-vloyd .ui-dialog .ui-dialog-buttonpane {
+  margin-top: 0;
+  border-radius: 0 0 10px 10px;
+  background: #141e30;
+  border: none;
+}

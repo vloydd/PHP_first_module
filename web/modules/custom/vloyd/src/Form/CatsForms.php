@@ -16,7 +16,7 @@ use Drupal\Core\Url;
 class CatsForms extends FormBase {
 
   /**
-   * This func is form ID.
+   * This Func is Returning Form ID.
    *
    * @return string
    *   Comment smth.
@@ -26,7 +26,7 @@ class CatsForms extends FormBase {
   }
 
   /**
-   * This func is for build our form.
+   * This Func is for Build our Adding Cats Form.
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
@@ -82,7 +82,6 @@ class CatsForms extends FormBase {
       ],
       '#upload_location' => 'public://vloyd_cats_photos',
     ];
-
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#button_type' => 'primary',
@@ -105,7 +104,7 @@ class CatsForms extends FormBase {
   }
 
   /**
-   * This func validate our email.
+   * This Func Validates Our Form.
    *
    * @param array $form
    *   Comment smth.
@@ -153,7 +152,7 @@ class CatsForms extends FormBase {
   }
 
   /**
-   * This func validate our email.
+   * This Func Validate Our Email with AJAX.
    *
    * @param array $form
    *   Comment smth.
@@ -206,7 +205,7 @@ class CatsForms extends FormBase {
   }
 
   /**
-   * This func is for AJAX Redirect.
+   * This func is for AJAX Redirect or Setting Errors.
    *
    * @param array $form
    *   Comment smth.
@@ -225,7 +224,7 @@ class CatsForms extends FormBase {
   }
 
   /**
-   * This func submitting form.
+   * This Func Submitting Form and Inserts Data in DB.
    *
    * @param array $form
    *   Comment smth.

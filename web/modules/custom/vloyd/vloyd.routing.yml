@@ -34,14 +34,14 @@ vloyd.delete_form_admin:
   path: '/admin/structure/catslist/{id}/delete'
   defaults:
     _form: '\Drupal\vloyd\Form\CatsDeleteAdmins'
-    _title: 'DeleteForm'
+    _title: 'Admin Delete Form'
   requirements:
     _permission: 'administer site configuration'
 
 vloyd.edit_form_admin:
-  path: '/admin/structure/catslist/{id}/delete'
+  path: '/admin/structure/catslist/{id}/edit'
   defaults:
-    _form: '\Drupal\vloyd\Form\CatsEditsAdmin'
-    _title: 'Edit Form'
+    _form: '\Drupal\vloyd\Form\CatsEditAdmin'
+    _title: 'Admin Edit Form'
   requirements:
     _permission: 'administer site configuration'

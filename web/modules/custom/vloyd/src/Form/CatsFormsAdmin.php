@@ -8,7 +8,7 @@ use Drupal\Core\Url;
 use Drupal\file\Entity\File;
 
 /**
- * Our Form Edit Class.
+ * Our Form Admin Class.
  */
 class CatsFormsAdmin extends ConfirmFormBase {
   /**
@@ -16,10 +16,10 @@ class CatsFormsAdmin extends ConfirmFormBase {
    *
    * @var int
    */
-  protected $id;
+  public $id;
 
   /**
-   * Func for Setting Question.
+   * Func for Setting Question to Delete.
    *
    * @inheritDoc
    */
@@ -46,6 +46,15 @@ class CatsFormsAdmin extends ConfirmFormBase {
   }
 
   /**
+   * Func for Setting Description.
+   *
+   * @inheritDoc
+   */
+  public function getDescription() {
+    return $this->t("Are You Really Sure to Delete this Pretty Cats?");
+  }
+
+  /**
    * Func for Submitting Our Deleting.
    *
    * @inheritDoc
@@ -54,25 +63,17 @@ class CatsFormsAdmin extends ConfirmFormBase {
     $values = $form_state->getValue('table');
     $delete = array_filter($values);
     if (empty($delete)) {
-      $this->messenger()->addError($this->t("Choose something to delete."));
+      $this->messenger()->addError($this->t("Choose Something to Delete."));
     }
     else {
-      \Drupal::database()->delete('vloyd')
-        ->condition('id', $delete, 'IN')
-        ->execute();
+      \Drupal::database()->delete('vloyd')->condition('id', $values, 'in')->execute();
       $form_state->setRedirect('vloyd.cats-admin');
-      $this->messenger()->addStatus($this->t("Cats are deleted."));
+      $this->messenger()->addStatus($this->t("Cats Are Deleted."));
     }
-
-//    \Drupal::database()->delete('vloyd')->condition('id', $this->id)->execute();
-//    $this->messenger()
-//      ->addStatus($this->t('You Deleted Your Cat' ));
-//    $form_state->setRedirect('vloyd.cats-page');
-////    return $this->t('You Deleted Your Cat');
   }
 
   /**
-   * Func for Building Our Form.
+   * Func for Building Our Admin Form.
    *
    * @inheritDoc
    */
@@ -87,64 +88,71 @@ class CatsFormsAdmin extends ConfirmFormBase {
       $file = File::load($data->image);
       $pictureuri = $file->getFileUri();
       $picture_url = file_create_url($pictureuri);
-      $delete_url = Url::fromRoute('vloyd.delete_form', ['id' => $data->id], []);
-      $delete = [
-        '#type' => 'link',
-        '#title' => $this->t('Delete'),
-        '#url' => $delete_url,
-        '#options' => [
-          'attributes' => [
-      // 'class' => [
-      //              'vloyd-item',
-      //              'vloyd-delete',
-      //              'use-ajax',
-      //            ],
-            'data-dialog-type' => 'modal',
+      $delete_url = Url::fromRoute('vloyd.delete_form_admin', ['id' => $data->id], []);
+      $edit_url = Url::fromRoute('vloyd.edit_form_admin', ['id' => $data->id], []);
+      $image = [
+        'data' => [
+          '#theme'      => 'image',
+          '#alt'        => 'catImg',
+          '#uri'        => $pictureuri,
+          '#width'      => 150,
+          '#attributes' => [
+            // 'target' => '_blank',
+            // 'href' => $picture_url,
+            'class' => [
+              'cat_image_admin',
+            ],
           ],
         ],
       ];
-      $edit_url = Url::fromRoute('vloyd.edit_form', ['id' => $data->id], []);
+      $delete = [
+        'data' => [
+          '#type' => 'link',
+          '#title' => $this->t('Delete'),
+          '#url' => $delete_url,
+          '#options' => [
+            'attributes' => [
+              'class' => [
+                'vloyd-item',
+                'vloyd-delete',
+                'use-ajax',
+              ],
+              'data-dialog-type' => 'modal',
+            ],
+          ],
+        ],
+      ];
       $edit = [
-        '#type' => 'link',
-        '#title' => $this->t('Edit'),
-        '#url' => $edit_url,
-        '#options' => [
-//          'attributes' => [
-//            'class' => [
-//              'use-ajax',
-//            ],
-//            'data-dialog-type' => 'modal',
-//          ],
+        'data' => [
+          '#type' => 'link',
+          '#title' => $this->t('Edit'),
+          '#url' => $edit_url,
+          '#options' => [
+            'attributes' => [
+              'class' => [
+                'use-ajax',
+                'vloyd-item',
+                'vloyd-edit',
+              ],
+              'data-dialog-type' => 'modal',
+            ],
+          ],
         ],
       ];
-      $picture = [
-        '#theme' => 'image_style',
-        '#style_name' => 'medium',
-        '#uri' => $pictureuri,
-        '#attributes' => [
-          'class' => 'vloyd_image',
-          'height' => '150px',
-          'alt' => 'The photo of ' . $data->cats_name,
-        ],
-      ];
-      $cats[] = [
+      $cats[$data->id] = [
         'id' => $data->id,
         'name' => $data->cats_name,
         'email' => $data->email,
-        'image' => $picture,
-        'imageuri' => $pictureuri,
-        'imageurl' => $picture_url,
+        'image' => $image,
         'time' => date('d.m.y H:i:s', $data->timestamp),
         'delete' => $delete,
-        'edit' => $edit,
+        'edit'  => $edit,
       ];
       $header = [
-        'id' => $this->t('ID'),
+        'id' => $this->t('Cats ID'),
         'name' => $this->t('Name'),
         'email' => $this->t('Email'),
         'image' => $this->t('Photo'),
-      // 'imageuri' => $this->t('Photo Uri'),
-      //        'imageurl' => $this->t('Photo Url'),
         'time' => $this->t('Data'),
         'edit' => $this->t('Edit'),
         'delete' => $this->t('Delete'),
@@ -153,6 +161,7 @@ class CatsFormsAdmin extends ConfirmFormBase {
         '#type' => 'tableselect',
         '#header' => $header,
         '#options' => $cats,
+        '#empty' => $this->t('Nothing there.'),
       ];
       $form['submit'] = [
         '#type' => 'submit',

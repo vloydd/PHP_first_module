@@ -7,18 +7,20 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
 /**
- * Defines a confirmation form to confirm deletion of something by id.
+ * Defines a Form to Confirm Deletion of Something by ID for Admin.
  */
 class CatsDeleteAdmins extends ConfirmFormBase {
 
   /**
-   * ID of the item to delete.
+   * ID of the Item to Delete and Choose.
    *
    * @var int
    */
   public $id;
 
   /**
+   * Func for Getting ID  of Admin Form.
+   *
    * {@inheritdoc}
    */
   public function getFormId(): string {
@@ -26,6 +28,8 @@ class CatsDeleteAdmins extends ConfirmFormBase {
   }
 
   /**
+   * Func for Building Admin Form.
+   *
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $id = NULL): array {
@@ -37,17 +41,21 @@ class CatsDeleteAdmins extends ConfirmFormBase {
    * {@inheritDoc}
    */
   public function getQuestion():string {
-    return $this->t('Do you want to delete  this cat?');
+    return $this->t('Delete This Cat?');
   }
 
   /**
+   * Func for Setting Description of Deleting Form.
+   *
    * {@inheritDoc}
    */
   public function getDescription():string {
-    return $this->t('Do you really want to delete cat with id %id ?', ['%id' => $this->id]);
+    return $this->t('Dear Admin, Do You Really Want to Delete Cat With id %id?', ['%id' => $this->id]);
   }
 
   /**
+   * Func for Setting Text on Button that Confirms Deleting.
+   *
    * {@inheritdoc}
    */
   public function getConfirmText():string {
@@ -65,16 +73,18 @@ class CatsDeleteAdmins extends ConfirmFormBase {
    * {@inheritDoc}
    */
   public function getCancelUrl() {
-    return new Url('vloyd.cats-page');
+    return new Url('vloyd.cats-admin');
   }
 
   /**
+   * Func for Submitting Deletion.
+   *
    * {@inheritDoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     \Drupal::database()->delete('vloyd')->condition('id', $this->id)->execute();
     $this->messenger()
-      ->addStatus($this->t('You Deleted Your Cat(s)' ));
+      ->addStatus($this->t('You Deleted Your Cat(s)'));
     $form_state->setRedirect('vloyd.cats-admin');
   }
 

@@ -9,7 +9,7 @@ vloyd.cats-page:
 vloyd.cats-admin:
   path: '/admin/structure/catslist'
   defaults:
-    _controller: '\Drupal\vloyd\Controller\CatsAdmin::content'
+    _form: '\Drupal\vloyd\Form\CatsFormsAdmin'
     _title: 'Administer Cats'
   requirements:
     _permission: 'administer site configuration'
